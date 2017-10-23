@@ -1,0 +1,62 @@
+create database banco;
+use banco;
+create table clube(
+id_clube int primary_key auto_increment,
+nome varchar(255),
+sigla varchar(3),
+escudo varchar(255)
+);
+create table jogadores(
+id_jogador int primary_key auto_increment, 
+nome varchar (255),
+numerocamisa varchar(2));
+
+create table estadio(
+id_estadio int primary_key auto_increment,
+nome varchar(255),
+cidade varchar(255)
+);
+
+create table rodada(
+id int primary_key auto_increment,
+descricao bigint
+);
+
+alter table jogadores
+add column clube id_clube;
+
+alter table estadio
+add column clube id_clube;
+
+
+alter table jogadores
+add fk_clube foreing key (clube) references id_clube on delete no action on update no action; 
+
+alter table estadio
+add fk_clube foreing key (clube) references id_clube on delete no action on update no action;
+
+alter table jogadores modify nome varchar(255),
+                             modify numerocamisa varchar(2) not null;
+alter table clubes modify nome varchar (255) not null,
+                             modify sigla varchar (3) not null unique,
+                             modify escudo varchar (255) not null unique;
+alter table partidas modify gol_mandante bigint not null,
+                             modify gol_visitante bigint not null,
+                             modify estadio varchar(255) not null,
+                             modify horario time not null;
+alter table jogadores modify contratacao date not null,
+                             modify demissao date not null;
+                         
+insert into jogadores (id,nome,numercasmisa,id_clube)
+values (default,`Rodineilson`, `09`, default),
+       (default, `Claudison`, `22`, default),
+       (default, `Edinalson`, `17`, default);
+insert into clube (id_clube, nome, sigla, escudo)
+values (default, `Palmeiras`, `PAL`, `escudopalmeiras.com/br`),
+       (default, `Fluminense`,`FLU`,`escudofluminense.com/br`),
+       
+insert into estadio (id_estadio, nome, cidade, clube_id) 
+values (default, `maracana`,`Rio_de_Janeiro`, default);
+
+       
+       
